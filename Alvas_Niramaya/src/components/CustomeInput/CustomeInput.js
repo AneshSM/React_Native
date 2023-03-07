@@ -1,16 +1,26 @@
 import { StyleSheet, TextInput, View } from 'react-native'
 import React from 'react'
 import { clr60 } from '../../const/Colour/color'
+import{Controller} from '../../../node_modules/react-hook-form'
 
-const CustomeInput = ({ value, setValue, placeholder,secureTextEntry }) => {
+const CustomeInput = ({ control, name, rules, placeholder,secureTextEntry }) => {
     return (
         <View style={styles.container}>
-            <TextInput 
-            value={value}
-            placeholder={placeholder}
-            onChange={setValue}
-            style={styles.input}
-            secureTextEntry={secureTextEntry} />
+            <Controller
+            control={control}
+            name={name}
+            render={({field: {value,onChange,onBlur}})=>(
+                <TextInput 
+                value={value}
+                rules={rules}
+                placeholder={placeholder}
+                onChangeText={onChange}
+                onBlur={onBlur}
+                style={styles.input}
+                secureTextEntry={secureTextEntry} />
+            )}
+            />
+
         </View>
     )
 }

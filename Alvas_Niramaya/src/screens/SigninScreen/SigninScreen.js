@@ -10,17 +10,21 @@ import CustomeInput from '../../components/CustomeInput/CustomeInput';
 import CustomeButton from '../../components/CustomeButton/CustomeButton';
 import SocialSignInButtons from '../../components/SocialButtons/SocialSignInButtons/SocialSignInButtons';
 
+import { useForm, Controller } from '../../../node_modules/react-hook-form'
 
 
 const SigninScreen = () => {
     const { height } = useWindowDimensions();
-    const { username, setUsername } = useState('')
-    const { password, setPassword } = useState('')
-
     const navigation = useNavigation()
 
-    const onSiginPressed = () => {
-        console.warn('SignIn')
+    const { 
+        control, 
+        handleSubmit, 
+        formState: { errors } 
+    } = useForm();
+
+    const onSiginPressed = data => {
+        console.log(data)
         //Validate User
         navigation.navigate('Home')
     }
@@ -40,25 +44,39 @@ const SigninScreen = () => {
         <View style={styles.root}>
             <View style={[SigninScreen_Style.head]}>
                 <View style={[SigninScreen_Style.logo]}>
-                <Image source={Logo} style={[styles.logo,SigninScreen_Style.image]} resizeMode='contain'></Image>
+                    <Image source={Logo} style={[styles.logo, SigninScreen_Style.image]} resizeMode='contain'></Image>
                 </View>
                 <View style={[SigninScreen_Style.title]}>
-                    <Text style={[SigninScreen_Style.text,SigninScreen_Style.titleText1]}>Alva’s </Text>
-                    <Text style={[SigninScreen_Style.text,SigninScreen_Style.titleText2]}>Niraamaya </Text>
+                    <Text style={[SigninScreen_Style.text, SigninScreen_Style.titleText1]}>Alva’s </Text>
+                    <Text style={[SigninScreen_Style.text, SigninScreen_Style.titleText2]}>Niraamaya </Text>
                 </View>
             </View>
             <View style={[styles.container, { padding: height * 0.04 }]}>
                 <ScrollView showsVerticalScrollIndicator={false}>
-                    <CustomeInput placeholder='Username' value={username} setValue={setUsername} />
-                    <CustomeInput placeholder='Password' value={password} setValue={setPassword} secureTextEntry />
+
+                    <CustomeInput
+                        placeholder='Username'
+                        name='Username'
+                        control={control}
+                        rules={{required:true}}
+                    />
+                    <CustomeInput
+                        placeholder='Password'
+                        name='Password'
+                        control={control}
+                        rules={{required:true}}
+                        secureTextEntry
+                    />
+
+
                     <CustomeButton
                         text='LogIn'
-                        onPress={onSiginPressed}
+                        onPress={handleSubmit(onSiginPressed)}
 
                     />
                     <CustomeButton
                         text='Forgot Password ?'
-                        onPress={onForgotPasswordPressed} type="Tertiary"
+                        onPress={handleSubmit(onForgotPasswordPressed)} type="Tertiary"
 
                     />
                     <SocialSignInButtons />
