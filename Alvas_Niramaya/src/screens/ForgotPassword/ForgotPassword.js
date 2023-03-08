@@ -7,6 +7,8 @@ import { clr30, clr60 } from '../../const/Colour/color';
 
 import {useNavigation} from '@react-navigation/native'  
 
+import { Controller,useForm } from 'react-hook-form';
+
 const ForgotPassword = () => {
     const { height } = useWindowDimensions();
     const { username, setUsername } = useState('')
@@ -23,16 +25,36 @@ const ForgotPassword = () => {
         navigation.navigate('NewPassword')
     }
 
+    const{
+        control,
+        handleSubmit,
+        formState:{errors}
+    }=useForm();
 
     return (
         <View style={styles.root}>
             <Text style={styles.title}>Reset Your Password</Text>
             <View style={[styles.container, { padding: height * 0.04 }]}>
                 <ScrollView showsVerticalScrollIndicator={false}>
-                    <CustomeInput placeholder='Username' value={username} setValue={setUsername} /> 
+                    <CustomeInput 
+                    placeholder='Username'  
+                    control={control}
+                    name='Username'
+                    rules={{
+                        required: 'Username is required',
+                        minLength: {
+                            value: 4,
+                            message: 'Username should be minimum 4 characters long'
+                        },
+                        maxLength: {
+                            value: 20,
+                            message: 'Username should be maximum 20 characters long'
+                        },
+                    }}
+                    /> 
                     <CustomeButton
                         text='Send'
-                        onPress={onSendPressed}
+                        onPress={handleSubmit(onSendPressed)}
                     />
                     <CustomeButton
                         text="Back to Signin"

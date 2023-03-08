@@ -10,18 +10,19 @@ import CustomeInput from '../../components/CustomeInput/CustomeInput';
 import CustomeButton from '../../components/CustomeButton/CustomeButton';
 import SocialSignInButtons from '../../components/SocialButtons/SocialSignInButtons/SocialSignInButtons';
 
-import { useForm, Controller } from '../../../node_modules/react-hook-form'
-
+import { useForm, Controller } from 'react-hook-form'
 
 const SigninScreen = () => {
     const { height } = useWindowDimensions();
     const navigation = useNavigation()
 
-    const { 
-        control, 
-        handleSubmit, 
-        formState: { errors } 
+    const {
+        control,
+        handleSubmit,
+        formState: { errors }
     } = useForm();
+
+    // console.log(errors); 
 
     const onSiginPressed = data => {
         console.log(data)
@@ -41,33 +42,37 @@ const SigninScreen = () => {
 
 
     return (
-        <View style={styles.root}>
-            <View style={[SigninScreen_Style.head]}>
-                <View style={[SigninScreen_Style.logo]}>
-                    <Image source={Logo} style={[styles.logo, SigninScreen_Style.image]} resizeMode='contain'></Image>
+        <ScrollView showsVerticalScrollIndicator={false}>
+            <View style={styles.root}>
+                <View style={[SigninScreen_Style.head]}>
+                    <View style={[SigninScreen_Style.logo]}>
+                        <Image source={Logo} style={[styles.logo, SigninScreen_Style.image]} resizeMode='contain'></Image>
+                    </View>
+                    <View style={[SigninScreen_Style.title]}>
+                        <Text style={[SigninScreen_Style.text, SigninScreen_Style.titleText1]}>Alva’s </Text>
+                        <Text style={[SigninScreen_Style.text, SigninScreen_Style.titleText2]}>Niraamaya </Text>
+                    </View>
                 </View>
-                <View style={[SigninScreen_Style.title]}>
-                    <Text style={[SigninScreen_Style.text, SigninScreen_Style.titleText1]}>Alva’s </Text>
-                    <Text style={[SigninScreen_Style.text, SigninScreen_Style.titleText2]}>Niraamaya </Text>
-                </View>
-            </View>
-            <View style={[styles.container, { padding: height * 0.04 }]}>
-                <ScrollView showsVerticalScrollIndicator={false}>
+                <View style={[styles.container, { padding: height * 0.04 }]}>
 
                     <CustomeInput
                         placeholder='Username'
                         name='Username'
                         control={control}
-                        rules={{required:true}}
+                        rules={{ required: 'Username is required' }}
                     />
                     <CustomeInput
                         placeholder='Password'
                         name='Password'
                         control={control}
-                        rules={{required:true}}
+                        rules={{
+                            required: 'Password is required',
+                            minLength: { 
+                                value: 8, 
+                                message: 'Password should be minimum 8 characters long' },
+                        }}
                         secureTextEntry
                     />
-
 
                     <CustomeButton
                         text='LogIn'
@@ -76,7 +81,7 @@ const SigninScreen = () => {
                     />
                     <CustomeButton
                         text='Forgot Password ?'
-                        onPress={handleSubmit(onForgotPasswordPressed)} type="Tertiary"
+                        onPress={onForgotPasswordPressed} type="Tertiary"
 
                     />
                     <SocialSignInButtons />
@@ -85,9 +90,9 @@ const SigninScreen = () => {
                         onPress={onSignUpPressed} type="Tertiary"
 
                     />
-                </ScrollView>
+                </View>
             </View>
-        </View>
+        </ScrollView>
     )
 }
 

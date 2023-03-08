@@ -8,6 +8,7 @@ import SocialSignUpButtons from '../../components/SocialButtons/SocialSignUpButt
 
 import {useNavigation} from '@react-navigation/native'  
 
+import { Controller,useForm } from 'react-hook-form';
 
 const ConfirmEmailScreen = () => {
     const { height } = useWindowDimensions();
@@ -29,16 +30,40 @@ const ConfirmEmailScreen = () => {
         navigation.navigate('Home')
     }
 
+    const{
+        control,
+        handleSubmit,
+        formState:{errors}
+    }=useForm();
+
+    const EMAIL_REGEX = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
 
     return (
         <View style={styles.root}>
             <Text style={styles.title}>Confirm Your Email</Text>
             <View style={[styles.container, { padding: height * 0.04 }]}>
                 <ScrollView showsVerticalScrollIndicator={false}>
-                    <CustomeInput placeholder='Enter your confirmation code' value={Code} setValue={setCode} /> 
+                    <CustomeInput 
+                    placeholder='Enter your confirmation code' 
+                    name='Confirmation code'
+                    control={control}
+                    rules={
+                        {
+                            required:'Enter the code',
+                            minLength:{
+                                value:4,
+                                message:'code must be minimum of 4 characters long'
+                            },
+                            pattern:{
+                                value:EMAIL_REGEX,
+                                message:'Enter valid Email id'
+                            }
+                        }
+                    }
+                    /> 
                     <CustomeButton
                         text='Confirm'
-                        onPress={onConfirmPressed}
+                        onPress={handleSubmit(onConfirmPressed)}
                     />
                     <CustomeButton
                         text="Resend Code"

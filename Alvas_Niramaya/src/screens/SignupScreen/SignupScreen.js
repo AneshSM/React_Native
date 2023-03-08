@@ -6,18 +6,17 @@ import CustomeButton from '../../components/CustomeButton/CustomeButton';
 import { clr30, clr60 } from '../../const/Colour/color';
 import SocialSignUpButtons from '../../components/SocialButtons/SocialSignUpButtons/SocialSignUpButtons';
 
-import {useNavigation} from '@react-navigation/native'  
+import { useNavigation } from '@react-navigation/native'
+
+import { Controller, useForm } from 'react-hook-form';
+
 
 
 const SignupScreen = () => {
     const { height } = useWindowDimensions();
-    const { Name, setName } = useState('')
-    const { Phone_Number, setPhone_Number } = useState('')
-    const { Email, setEmail } = useState('')
-    const { Password, setPassword } = useState('')
-    const { Confpassword, setConfPassword } = useState('')
+    const navigation = useNavigation()
 
-    const navigation =useNavigation()
+    const EMAIL_REGEX = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
 
 
     const onSigInPressed = () => {
@@ -30,25 +29,100 @@ const SignupScreen = () => {
     }
 
 
+    const {
+        control,
+        handleSubmit,
+        formState: { errors },
+        watch
+    } = useForm();
 
+    const pwd=watch('Password');
 
     return (
         <View style={styles.root}>
             <Text style={styles.title}>Create New Account</Text>
             <View style={[styles.container, { padding: height * 0.04 }]}>
                 <ScrollView showsVerticalScrollIndicator={false}>
-                    <CustomeInput placeholder='Name' value={Name} setValue={setName} />
-                    <CustomeInput placeholder='Phone Number' value={Number} setValue={setPhone_Number} /> 
-                    <CustomeInput placeholder='Email' value={Email} setValue={setEmail} /> 
-                    <CustomeInput placeholder='Password' value={Password} setValue={setPassword} secureTextEntry />
-                    <CustomeInput placeholder='Confirm Password' value={Confpassword} setValue={setConfPassword} secureTextEntry />
+                    <CustomeInput
+                        placeholder='Username'
+                        name='Username'
+                        control={control}
+                        rules={{
+                            required: 'Username is required',
+                            minLength: {
+                                value: 4,
+                                message: 'Username should be minimum 4 characters long'
+                            },
+                            maxLength: {
+                                value: 20,
+                                message: 'Username should be maximum 20 characters long'
+                            },
+                        }}
+                    />
+                    <CustomeInput
+                        placeholder='Phone Number'
+                        control={control}
+                        name='Phone Number'
+                        rules={{
+                            required: 'Phone Number is required',
+                            minLength: {
+                                value: 10,
+                                message: 'Phone Number should be minimum 10 characters long'
+                            },
+                            maxLength: {
+                                value: 10,
+                                message: 'Phone Number should be maximum 10 characters long'
+                            },
+                        }}
+                    />
+                    <CustomeInput
+                        placeholder='Email'
+                        name='Email'
+                        control={control}
+                        rules={{
+                            required: 'Email is required',
+                            pattern: { 
+                                value: EMAIL_REGEX, 
+                                message: 'Enter valid Email id' 
+                            }
+                        }}
+                    />
+                    <CustomeInput
+                        placeholder='Password'
+                        secureTextEntry
+                        control={control}
+                        name='Password'
+                        rules={{
+                            required: 'Password is required',
+                            minLength: {
+                                value: 8,
+                                message: 'Password should be minimum 8 characters long'
+                            },
+                        }}
+                    />
+                    <CustomeInput
+                        placeholder='Confirm Password'
+                        secureTextEntry
+                        control={control}
+                        name='Confirm Password'
+                        rules={{
+                            required: 'Re-Enter the same Password',
+                            minLength: {
+                                value: 8,
+                                message: 'Password should be minimum 8 characters long'
+                            },
+                            validate:value=>value === pwd || 'Password does not match'
+                        }}
+                    />
+
+
                     <CustomeButton
                         text='Create Account'
-                        onPress={onSignUpPressed}
+                        onPress={handleSubmit(onSignUpPressed)}
 
                     />
                     <Text style={styles.text}>By Registering, you confirm that you accept our  <Text style={styles.link}>Terms of Use</Text>  and <Text style={styles.link}>Privacy and Policy</Text></Text>
-                    <SocialSignUpButtons/>
+                    <SocialSignUpButtons />
                     <CustomeButton
                         text="Alreafy have an account ? Login"
                         onPress={onSigInPressed} type="Tertiary"

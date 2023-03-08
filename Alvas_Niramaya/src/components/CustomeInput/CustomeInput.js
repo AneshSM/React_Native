@@ -1,29 +1,37 @@
-import { StyleSheet, TextInput, View } from 'react-native'
+import { StyleSheet, TextInput, View, Text } from 'react-native'
 import React from 'react'
 import { clr60 } from '../../const/Colour/color'
-import{Controller} from '../../../node_modules/react-hook-form'
+import { Controller } from 'react-hook-form';
 
-const CustomeInput = ({ control, name, rules, placeholder,secureTextEntry }) => {
+const CustomeInput = ({
+    control,
+    name,
+    rules = {},
+    placeholder,
+    secureTextEntry
+}) => {
     return (
-        <View style={styles.container}>
-            <Controller
+        <Controller
             control={control}
             name={name}
-            render={({field: {value,onChange,onBlur}})=>(
-                <TextInput 
-                value={value}
-                rules={{required:true}}
-                placeholder={placeholder}
-                onChangeText={onChange}
-                onBlur={onBlur}
-                style={styles.input}
-                secureTextEntry={secureTextEntry} />
+            rules={rules}
+            render={({ field: { value, onChange, onBlur }, fieldState: { error } }) => (
+                <>
+                    <View style={[styles.container, { borderColor: error ? 'red' : '#e8e8e8' }]}>
+                        <TextInput
+                            value={value}
+                            placeholder={placeholder}
+                            onChangeText={onChange}
+                            onBlur={onBlur}
+                            style={[styles.input, {}]}
+                            secureTextEntry={secureTextEntry} />
+                    </View>
+                    {error && (<Text style={{ color: 'red', alignSelf: 'stretch' }} >{error.message || 'Error'}</Text>)}
+                </>
             )}
-            />
-
-        </View>
-    )
-}
+        />
+    );
+};
 
 export default CustomeInput
 
@@ -38,7 +46,7 @@ const styles = StyleSheet.create({
         marginVertical: 10,
     },
     input: {
-        fontWeight:'bold',
-        fontSize:18,
+        fontWeight: 'bold',
+        fontSize: 18,
     }
 })

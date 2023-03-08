@@ -7,6 +7,8 @@ import { clr30, clr60 } from '../../const/Colour/color';
 
 import {useNavigation} from '@react-navigation/native'  
 
+import { Controller,useForm } from 'react-hook-form';
+
 const NewPasswordScreen = () => {
     const { height } = useWindowDimensions();
     const { Code, setCode } = useState('')
@@ -25,17 +27,57 @@ const NewPasswordScreen = () => {
         console.warn('Password changed!')
     }
 
+    const{
+        control,
+        handleSubmit,
+        watch,
+        formState:{errors}
+    }=useForm();
+
+    const pwd=watch('New Passsword');
 
     return (
         <View style={styles.root}>
             <Text style={styles.title}>Reset Your Password</Text>
             <View style={[styles.container, { padding: height * 0.04 }]}>
                 <ScrollView showsVerticalScrollIndicator={false}>
-                    <CustomeInput placeholder='Code' value={Code} setValue={setCode} /> 
-                    <CustomeInput placeholder='New Password' setValue={setPassword}/>
+                    <CustomeInput 
+                    placeholder='Code' 
+                    control={control}
+                    name='Code'
+                    rules={{
+                        required:'Enter the code recieved',
+                        minLength:'Code must be of minimum 4 characters long'
+                    }}
+                    /> 
+                    <CustomeInput 
+                    placeholder='New Password' 
+                    name='New Passsword'
+                    control={control}
+                    rules={{
+                        required:'Enter the new Password',
+                        minLength: {
+                            value: 8,
+                            message: 'Password should be minimum 8 characters long'
+                        },
+                    }}
+                    />
+                    <CustomeInput 
+                    placeholder='Confirm Password' 
+                    name='Confirm Passsword'
+                    control={control}
+                    rules={{
+                        required:'Re-Enter the new Password',
+                        minLength: {
+                            value: 8,
+                            message: 'Password should be minimum 8 characters long'
+                        },
+                        validate:value=>value===pwd || 'Password does not match',
+                    }}
+                    />
                     <CustomeButton
                         text='Submit'
-                        onPress={onSubmitPressed}
+                        onPress={handleSubmit(onSubmitPressed)}
                     />
                     <CustomeButton
                         text="Back to Signin"
