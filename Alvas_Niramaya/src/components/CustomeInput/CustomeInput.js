@@ -12,7 +12,7 @@ const CustomeInput = ({ control, name, rules, placeholder,secureTextEntry }) => 
             render={({field: {value,onChange,onBlur}})=>(
                 <TextInput 
                 value={value}
-                rules={rules}
+                rules={{required:true}}
                 placeholder={placeholder}
                 onChangeText={onChange}
                 onBlur={onBlur}
