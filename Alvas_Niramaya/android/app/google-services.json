@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "87437797407",
+    "project_id": "niraamaya-204",
+    "storage_bucket": "niraamaya-204.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:87437797407:android:5c50cd2a5da8e3dc920d2a",
+        "android_client_info": {
+          "package_name": "com.alvas_niramaya"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "87437797407-gu72a1u32nkku2ifvp19hn3j8heqbn30.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3K2506bgDNpSg9AqC8SxkuXy3B3u5lNo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "87437797407-gu72a1u32nkku2ifvp19hn3j8heqbn30.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
