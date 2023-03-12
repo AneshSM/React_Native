@@ -8,6 +8,14 @@ import HomeScreen from '../../screens/HomeScreen/HomeScreen'
 const Tab = createBottomTabNavigator();
 
 function Tabs() {
+  const screenOptions = {
+    tabBarStyle:{
+
+    },
+    tabBarItemStyle:{
+
+    }
+  };
   return (
     <Tab.Navigator>
       <Tab.Screen name='Home' component={HomeScreen} />

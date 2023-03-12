@@ -6,7 +6,6 @@ import Tabs from '../../components/TabNavigator/TabNavigation'
 const DesktopScreen = () => {
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
-      
       <Tabs/>
     </ScrollView>
   )

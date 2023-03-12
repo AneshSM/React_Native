@@ -10,18 +10,18 @@ import ForgotPassword from '../screens/ForgotPassword/ForgotPassword';
 import NewPasswordScreen from '../screens/NewPasswordScreen';
 import DesktopScreen from '../screens/DesktopScreen/DesktopScreen';
 
-const Stack= createNativeStackNavigator();
-const Navigation= () => {
+const Stack = createNativeStackNavigator();
+const Navigation = () => {
   return (
     <NavigationContainer>
-        <Stack.Navigator screenOptions={{headerShown: false}}>
-            <Stack.Screen name='SignIn' component={SigninScreen} />
-            <Stack.Screen name='SignUp' component={SignupScreen} />
-            <Stack.Screen name='ConfirmEmail' component={ConfirmEmailScreen} />
-            <Stack.Screen name='ForgotPassword' component={ForgotPassword} />
-            <Stack.Screen name='NewPassword' component={NewPasswordScreen} />
-            <Stack.Screen name='Home' component={DesktopScreen} />
-        </Stack.Navigator>
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Screen name='MainHome' component={DesktopScreen} />
+        <Stack.Screen name='SignIn' component={SigninScreen} />
+        <Stack.Screen name='SignUp' component={SignupScreen} />
+        <Stack.Screen name='ConfirmEmail' component={ConfirmEmailScreen} />
+        <Stack.Screen name='ForgotPassword' component={ForgotPassword} />
+        <Stack.Screen name='NewPassword' component={NewPasswordScreen} />
+      </Stack.Navigator>
     </NavigationContainer>
   );
 }
