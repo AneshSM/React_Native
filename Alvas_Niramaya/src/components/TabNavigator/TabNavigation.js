@@ -1,10 +1,10 @@
 import * as React from 'react';
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import AppointmentScreen from '../../screens/AppointmentScreen';
-import MapScreen from '../../screens/MapScreen';
-import ProfileScreen from '../../screens/ProfileScreen';
-import HomeScreen from '../../screens/HomeScreen/HomeScreen'
+import AppointmentScreen from '../../screens/Home/AppointmentScreen';
+import MapScreen from '../../screens/Home/MapScreen';
+import ProfileScreen from '../../screens/Home/ProfileScreen';
+import HomeScreen from '../../screens/Home/HomeScreen'
 const Tab = createBottomTabNavigator();
 
 function Tabs() {
@@ -18,7 +18,7 @@ function Tabs() {
   };
   return (
     <Tab.Navigator>
-      <Tab.Screen name='Home' component={HomeScreen} />
+      <Tab.Screen name='HOME' component={HomeScreen} />
       <Tab.Screen name='Appointment' component={AppointmentScreen} />
       <Tab.Screen name='Map' component={MapScreen}/>
       <Tab.Screen name='Profile' component={ProfileScreen}/>
